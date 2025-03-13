@@ -1,0 +1,137 @@
+<!-- Güncellenmiş Versiyon -->
+<html>
+<head>
+    <style>
+        body {
+            background-color: #f4c2c2;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+        }
+        .question {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .heart {
+            font-size: 50px;
+            color: red;
+            animation: heartbeat 1s infinite;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .btn {
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .yes {
+            background-color: #d63384;
+            color: white;
+        }
+        .no {
+            background-color: #ff4d4d;
+            color: white;
+            position: absolute;
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <p class="question" id="question">Beni seviyor musun?</p>
+        <div class="heart" id="heart">❤️</div>
+        <div class="buttons">
+            <button class="btn yes" onclick="nextQuestion()">Evet</button>
+            <button class="btn no" onmouseover="moveButton(this)">Hayır</button>
+        </div>
+    </div>
+    
+    <script>
+        const questions = [
+            "Benimle konuşmak hoşuna gidiyor mu?",
+            "Beni beğeniyor musun?",
+            "Beni tatlı buluyor musun?",
+            "Benimle eğleniyor musun?"
+        ];
+        let index = 0;
+        function nextQuestion() {
+            if (index < questions.length) {
+                document.getElementById("question").innerText = questions[index];
+                index++;
+            } else {
+                startCountdown();
+            }
+        }
+        function moveButton(button) {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+        }
+        function startCountdown() {
+            document.getElementById("content").innerHTML = '<h2>10</h2>';
+            let count = 9;
+            const countdown = setInterval(() => {
+                if (count > 0) {
+                    document.getElementById("content").innerHTML = `<h2>${count}</h2>`;
+                    count--;
+                } else {
+                    clearInterval(countdown);
+                    showFinalText();
+                }
+            }, 1000);
+        }
+        function showFinalText() {
+            document.getElementById("content").innerHTML = `
+                <h2>Kurtarılmayı bekleyen bir prenses değilim ama...</h2>
+            `;
+            setTimeout(() => {
+                document.getElementById("content").innerHTML = `
+                    <h2>Zırhını kuşanmış yanıma gelsen seni, geri çevirmezdim...</h2>
+                `;
+            }, 4000);
+            setTimeout(() => {
+                document.getElementById("content").innerHTML = `
+                    <h2>Benim güçlü şövalyem...</h2>
+                `;
+            }, 8000);
+            setTimeout(() => {
+                document.getElementById("content").innerHTML = `
+                    <h2>...SENİ ÇOK SEVİYORUM...</h2>
+                `;
+            }, 12000);
+            setTimeout(() => {
+                showFinalScreen();
+            }, 18000);
+        }
+        function showFinalScreen() {
+            document.getElementById("content").innerHTML = `
+                <h2>Benimle çıkar mısın?</h2>
+                <div class="buttons">
+                    <button class="btn yes" onclick="showHearts()">Evet</button>
+                    <button class="btn no">Hayır</button>
+                </div>
+            `;
+        }
+        function showHearts() {
+            document.getElementById("content").innerHTML = '';
+            for (let i = 0; i < 30; i++) {
+                let heart = document.createElement("div");
+                heart.innerHTML = "❤️";
+                heart.style.position = "absolute";
+                heart.style.left = Math.random() * window.innerWidth + "px";
+                heart.style.top = Math.random() * window.innerHeight + "px";
+                heart.style.fontSize = "30px";
+                document.body.appendChild(heart);
+            }
+        }
+    </script>
+</body>
+</html>
